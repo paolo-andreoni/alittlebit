@@ -1,0 +1,10 @@
+pip_search
+ipython
+sanic
+jinja2
+SQLAlchemy
+asyncpg
+asyncio
+matplotlib
+pandas
+
