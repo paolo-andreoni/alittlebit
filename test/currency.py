@@ -15,18 +15,19 @@ async def test(request):
                 SELECT *  FROM rates WHERE ISO = 'USD'; 
             '''
         rows = await conn.fetch(sql)
-#        return response.json({'status': 200, 'data': jsonify(rows)}, status=200)
+        # return response.json({'status': 200, 'data': jsonify(rows)}, status=200)
         return response.text(json.dumps(rows, indent=4, sort_keys=True, default=str))
+
 
 @app.listener('before_server_start')
 async def register_db(app, loop):
     # Create a database connection pool
     conn = "postgres://{user}:{password}@{host}:{port}/{database}?sslmode=disable" \
         .format(
-            user='tinyuser',
+            user='growens',
             password='alittlebit-1729',
-            host='db',
-            port=5432,
+            host='growens-db',
+            port=2345,
             database='currencies'
         )
     app.config['pool'] = await create_pool(
@@ -63,7 +64,7 @@ def jsonify(records):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",
-            port=8181,
+            port=8282,
             access_log=True,
             debug=True)
     # import datetime

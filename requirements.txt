@@ -1,5 +1,6 @@
-pip_search
-ipython
+#pip_search
+#ipython
+pyOpenSSL
 sanic
 jinja2
 SQLAlchemy

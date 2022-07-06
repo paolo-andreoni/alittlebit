@@ -1,35 +1,26 @@
-version: '3'
 services:
-  nginx-server:
-    image: 'nginx'
+  db:
+    image: 'postgres:latest'
+    ports:
+      - '2345:5432'
+    expose: ['2345']
+    environment:
+      - 'POSTGRES_PASSWORD=p1r1p1cch10'
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'
+#  redis:
+#    image: 'redis:latest'
+  app:
+    build:
+      context: .
+    ports:
+      - "8081:8081"
+    volumes:
+      - './:/usr/local/app:rw'
+    command: python /usr/local/app/src/currency.py
+  nginx:
+    image: 'nginx:latest'
     ports:
       - "8080:80"
     expose: ['8080']
     volumes:
      - ./nginx/conf.d:/etc/nginx/conf.d
-  python-app:
-    build:
-      context: .
-    ports:
-      - "8081:8081"
-    expose: ['8181']
-    volumes:
-      - './:/usr/local/app:rw'
-    command: ["python", "/usr/local/app/src/currency.py"]
-#  app-tests:
-#    build:
-#      context: .
-#    command: ["curl", "nginx-server/csv/daily_rates_20211226.csv"]
-#      # ["curl", "nginx-server/usd"]
-  postgresql:
-    image: docker.io/bitnami/postgresql:14
-    ports:
-      - '2345:5432'
-    expose: ['2345']
-    volumes:
-      - 'postgresql_data:/bitnami/postgresql'
-    environment:
-      - 'ALLOW_EMPTY_PASSWORD=yes'
-volumes:
-  postgresql_data:
-    driver: local
