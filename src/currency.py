@@ -1,7 +1,7 @@
+import os
 import json
-
-from sanic import Sanic, response
 from asyncpg import create_pool
+from sanic import Sanic, response
 
 
 app = Sanic(__name__)
@@ -24,8 +24,8 @@ async def register_db(app, loop):
     # Create a database connection pool
     conn = "postgres://{user}:{password}@{host}:{port}/{database}?sslmode=disable" \
         .format(
-            user='',
-            password='',
+            user=os.environ.get('PG_APP_USERNAME'),
+            password=os.environ.get('PG_APP_PASSWORD'),
             host='db',
             port=5432,
             database='currencies'

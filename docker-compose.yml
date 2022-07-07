@@ -22,3 +22,5 @@ services:
     expose: ['8080']
     volumes:
      - ./nginx/conf.d:/etc/nginx/conf.d
+environment:
+  env_file: ./docker_env_file
