@@ -18,13 +18,14 @@ async def test(request):
 #        return response.json({'status': 200, 'data': jsonify(rows)}, status=200)
         return response.text(json.dumps(rows, indent=4, sort_keys=True, default=str))
 
+
 @app.listener('before_server_start')
 async def register_db(app, loop):
     # Create a database connection pool
     conn = "postgres://{user}:{password}@{host}:{port}/{database}?sslmode=disable" \
         .format(
-            user='tinyuser',
-            password='alittlebit-1729',
+            user='',
+            password='',
             host='db',
             port=5432,
             database='currencies'
