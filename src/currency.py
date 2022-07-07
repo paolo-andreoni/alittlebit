@@ -5,6 +5,11 @@ from sanic import Sanic, response
 
 
 app = Sanic(__name__)
+PG_HOST=os.environ.get('PG_HOST')
+PG_PORT=os.environ.get('PG_PORT')
+PG_APP_USERNAME=os.environ.get('PG_APP_USERNAME')
+PG_APP_PASSWORD=os.environ.get('PG_APP_PASSWORD')
+
 
 
 @app.route("/")
@@ -24,8 +29,8 @@ async def register_db(app, loop):
     # Create a database connection pool
     conn = "postgres://{user}:{password}@{host}:{port}/{database}?sslmode=disable" \
         .format(
-            user=os.environ.get('PG_APP_USERNAME'),
-            password=os.environ.get('PG_APP_PASSWORD'),
+            user=PG_APP_USERNAME,
+            password=PG_APP_PASSWORD,
             host='db',
             port=5432,
             database='currencies'

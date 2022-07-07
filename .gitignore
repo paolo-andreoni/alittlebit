@@ -1,4 +1,4 @@
 /.DS_Store
 /.idea
 /doc/
-/docker_env_file
+/.env

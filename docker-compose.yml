@@ -5,6 +5,8 @@ services:
       - '2345:5432'
     expose: ['2345']
     environment:
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+      - "POSTGRES_HOST_AUTH_METHOD=${POSTGRES_HOST_AUTH_METHOD}"
 #  redis:
 #    image: 'redis:latest'
   app:
@@ -15,6 +17,11 @@ services:
     volumes:
       - './:/usr/local/app:rw'
     command: python /usr/local/app/src/currency.py
+    environment:
+      - "PG_APP_USERNAME=${PG_APP_USERNAME}"
+      - "PG_APP_PASSWORD=${PG_APP_PASSWORD}"
+      - "PG_HOST=${PG_HOST}"
+      - "PG_PORT=${PG_PORT}"
   nginx:
     image: 'nginx:latest'
     ports:
@@ -22,5 +29,3 @@ services:
     expose: ['8080']
     volumes:
      - ./nginx/conf.d:/etc/nginx/conf.d
-environment:
-  env_file: ./docker_env_file
